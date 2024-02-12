@@ -97,21 +97,4 @@ func main() {
 	}
 }
 
-// func main() {
-// 	servers := []Server{
-// 		newSimpleServer("https://www.google.com"),
-// 		newSimpleServer("https://www.bing.com"),
-// 		newSimpleServer("http://www.facebook.com"),
-// 	}
 
-// 	lb := NewLoadbalancer("8000", servers)
-
-// 	handleredirect := func(rw http.ResponseWriter, req *http.Request) {
-// 		lb.serverProxy(rw, req)
-// 	}
-// 	http.HandleFunc("/", handleredirect)
-
-// 	fmt.Printf("Serving your request at the 'localhost:%s' hang tight!!\n", lb.port)
-
-// 	http.ListenAndServe(":"+lb.port, nil)
-// }
