@@ -1,28 +1,39 @@
-# This workflow will build a golang project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+name: Go CI/CD Pipeline
 
-name: Go
-
+# Workflow triggers: push to main or pull request targeting main
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main  # Change to your main development branch
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main  # Change to your main development branch
 
 jobs:
+  build_and_test:
+    runs-on: ubuntu-latest  # Run the job on the latest Ubuntu environment
 
-  build:
-    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+      # Step 1: Check out the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.22.2'
+      # Step 2: Set up Go environment
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20'  # Set the appropriate Go version for your project
 
-    - name: Build
-      run: go build -v ./...
+      # Step 3: Install Go dependencies
+      - name: Install dependencies
+        run: go mod download
 
-    - name: Test
-      run: go test -v ./...
+      # Step 4: Run Go tests
+      - name: Run Go tests
+        run: go test -v ./...
+
+      # Step 5: Build the Go application
+      - name: Build application
+        run: go build -o app ./...
+
+      # Optional: Add additional checks or deployment steps as needed
